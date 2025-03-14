@@ -4,7 +4,6 @@ import Sider from 'antd/es/layout/Sider';
 import { FC } from 'react';
 import { Outlet } from 'react-router-dom';
 import Aside from './aside';
-import './index.scss';
 
 const MyLayout: FC = () => {
   return (
@@ -19,11 +18,13 @@ const MyLayout: FC = () => {
           console.log(collapsed, type);
         }}
       >
-        <div className="demo-logo-vertival"></div>
+        <div className="font-jy py-3 text-center text-[24px] leading-10 text-white">
+          ZEEKER
+        </div>
         <Aside />
       </Sider>
       <Layout>
-        <Header style={{ padding: '0 16px' }}>急急急</Header>
+        <Header style={{ padding: '0 16px' }}></Header>
         <Content
           style={{
             margin: '16px 16px 0',

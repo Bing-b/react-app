@@ -2,45 +2,54 @@ import { Navigate, useRoutes } from 'react-router-dom';
 
 import Layout from '../layout/index';
 import Login from '../pages/login/index';
-import User from '../pages/user';
+import User from '../pages/user/index';
 
 //公共
 import { lazy } from 'react';
 import lazyLoad from './lazyLoad';
 
-export const routerItem: Array<object> = [
+export const mainRoutes = [
   {
     path: '/',
     key: '/',
-    label: '首页',
+    label: 'root',
     hidden: true,
-    element: <Navigate to="/layout/home" />,
+    element: <Navigate to="/home/welcome" />,
   },
   {
     path: '/login',
     key: 'login',
     label: '登录',
+    hidden: true,
     element: <Login />,
     meta: {
       noAuth: true, //不需要token检验
     },
   },
   {
-    path: '/layout',
-    key: 'layout',
-    label: '控制台',
+    path: '/home',
+    key: 'home',
+    label: 'Dashborad',
     element: <Layout />,
     children: [
       {
-        path: 'home',
-        key: 'home',
+        path: 'welcome',
+        key: 'welcome',
         label: '首页',
         element: lazyLoad(lazy(() => import('../pages/home'))), //这里是延迟加载
       },
+    ],
+  },
+  {
+    path: '/user',
+    key: 'user',
+    label: '用户',
+    element: <Layout />,
+    children: [
       {
-        path: 'user',
-        key: 'user',
-        label: '用户页',
+        path: 'usercenter',
+        key: 'usercenter',
+        label: '个人中心',
         element: <User />,
       },
     ],
@@ -48,7 +57,7 @@ export const routerItem: Array<object> = [
 ];
 
 function GetRoutes() {
-  return useRoutes(routerItem);
+  return useRoutes(mainRoutes);
 }
 
 export default GetRoutes;

@@ -2,13 +2,13 @@
 import { Menu } from 'antd';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { routerItem } from '../routes/index';
+import { mainRoutes } from '../routes/index';
 
 const Aside = () => {
   const navigate = useNavigate();
 
   // 菜单
-  const [routes] = useState<any[]>(routerItem);
+  const [routes] = useState<any[]>(mainRoutes);
 
   // 打开与选中
   const defaultOpenKeys = (localStorage.getItem('openKeys') || '')?.split(',');
@@ -39,7 +39,7 @@ const Aside = () => {
         theme="dark"
         defaultOpenKeys={openKeys}
         defaultSelectedKeys={selectKeys}
-        items={routes}
+        items={routes.filter((i) => !i.hidden)}
         onClick={menuHandler}
       ></Menu>
     </>

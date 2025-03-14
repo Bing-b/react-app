@@ -1,6 +1,6 @@
 import { JSX } from 'react';
 import { Navigate, useLocation } from 'react-router-dom';
-import { routerItem } from '../routes/index';
+import { mainRoutes } from '../routes/index';
 import { matchRoute } from '../utils/util';
 
 const AutoRouter = (props: { children: JSX.Element }) => {
@@ -8,7 +8,7 @@ const AutoRouter = (props: { children: JSX.Element }) => {
   const token = localStorage.getItem('token');
 
   //1、获取当前路径对应的路由配置
-  const route = matchRoute(pathname, routerItem);
+  const route = matchRoute(pathname, mainRoutes);
   //2、如果noAuth为true，则直接跳过校验
   if (route && route.meta && route.meta.noAuth) {
     return props.children;

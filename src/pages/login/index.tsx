@@ -1,21 +1,9 @@
 import { LockOutlined, UserOutlined } from '@ant-design/icons';
 import { Button, Checkbox, Form, Input, message } from 'antd';
-import { FunctionComponent } from 'react';
+import { FC } from 'react';
 import { useNavigate } from 'react-router-dom';
 import reactIcon from '../../assets/images/logo_square.png';
 import './index.scss';
-
-const styles = {
-  login: {
-    background: `linear-gradient(blue, pink)`,
-    width: '100vw',
-    height: '100vh',
-  },
-};
-
-interface Props {
-  title: string;
-}
 
 interface LoginData {
   username: string;
@@ -23,8 +11,7 @@ interface LoginData {
   remember: string;
 }
 
-const Index: FunctionComponent<Props> = ({ title }) => {
-  title = title || 'React';
+const Index: FC = () => {
   const navigate = useNavigate();
   const [messageApi, contextHolder] = message.useMessage();
 
@@ -45,7 +32,7 @@ const Index: FunctionComponent<Props> = ({ title }) => {
           content: '登录成功!',
           duration: 1,
           onClose() {
-            navigate('/layout/home', { replace: true });
+            navigate('/home/welcome', { replace: true });
           },
         });
       } else {
@@ -65,14 +52,18 @@ const Index: FunctionComponent<Props> = ({ title }) => {
   };
 
   return (
-    <div className="login_container" style={styles.login}>
+    <div className="relative h-full w-full bg-black">
       {contextHolder}
-      <div className="title_big">
-        <img src={reactIcon} style={{ width: '50px' }} />
-        登录{' '}
+      <div className="absolute left-3 top-3 flex items-center gap-2">
+        <img src={reactIcon} className="w-10" />{' '}
+        <span className="font-jy text-[20px] font-bold text-white">ZEEKER</span>
       </div>
-      <div className="login_panel">
+      <div className="absolute bottom-0 right-0 top-0 w-[400px] bg-[#14161a] px-[100px] py-[200px]">
+        <h2 className="text-[24px]">欢迎回来 👋</h2>
+        <p className="text-sm text-white/60">请输入您的账户信息！</p>
+
         <Form
+          className="mt-8"
           name="basic"
           labelCol={{ span: 0 }}
           wrapperCol={{ span: 24 }}
@@ -83,17 +74,7 @@ const Index: FunctionComponent<Props> = ({ title }) => {
         >
           <Form.Item
             name="username"
-            rules={[
-              { required: true, message: '请输入用户名!' },
-              ({ getFieldValue }) => ({
-                validator(_, value) {
-                  if (value === 'admin') {
-                    return Promise.resolve();
-                  }
-                  return Promise.reject(new Error('用户名不存在!'));
-                },
-              }),
-            ]}
+            rules={[{ required: true, message: '请输入用户名！' }]}
           >
             <Input
               prefix={<UserOutlined />}
@@ -101,10 +82,9 @@ const Index: FunctionComponent<Props> = ({ title }) => {
               autoComplete="off"
             />
           </Form.Item>
-
           <Form.Item
             name="password"
-            rules={[{ required: true, message: '请输入密码!' }]}
+            rules={[{ required: true, message: '请输入密码！' }]}
           >
             <Input.Password prefix={<LockOutlined />} placeholder="密码" />
           </Form.Item>
@@ -115,9 +95,6 @@ const Index: FunctionComponent<Props> = ({ title }) => {
             valuePropName="checked"
           >
             <Checkbox>记住密码</Checkbox>
-            {/* <Button type="link" htmlType="button" style={{ float: "right" }}>
-                            忘记密码？
-                        </Button> */}
           </Form.Item>
 
           <Form.Item wrapperCol={{ span: 24 }}>

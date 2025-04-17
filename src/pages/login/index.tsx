@@ -78,7 +78,7 @@ const Index: FC = () => {
           >
             <Input
               prefix={<UserOutlined />}
-              placeholder="用户名"
+              placeholder="用户名:admin"
               autoComplete="off"
             />
           </Form.Item>
@@ -86,7 +86,7 @@ const Index: FC = () => {
             name="password"
             rules={[{ required: true, message: '请输入密码！' }]}
           >
-            <Input.Password prefix={<LockOutlined />} placeholder="密码" />
+            <Input.Password prefix={<LockOutlined />} placeholder="密码:123" />
           </Form.Item>
 
           <Form.Item

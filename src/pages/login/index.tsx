@@ -32,7 +32,7 @@ const Index: FC = () => {
           content: '登录成功!',
           duration: 1,
           onClose() {
-            navigate('/home/welcome', { replace: true });
+            navigate('/', { replace: true });
           },
         });
       } else {

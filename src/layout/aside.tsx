@@ -39,7 +39,9 @@ const Aside = () => {
         theme="dark"
         defaultOpenKeys={openKeys}
         defaultSelectedKeys={selectKeys}
-        items={routes.filter((i) => !i.hidden)}
+        items={
+          routes.filter((i) => !i.hidden).find((i) => i.path === '/').children
+        }
         onClick={menuHandler}
       ></Menu>
     </>

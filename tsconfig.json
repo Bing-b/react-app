@@ -13,7 +13,11 @@
     "paths": {
       "@/*": ["src/*"],
       "#/*": ["types/*"]
-    }
+    },
+    "module": "ESNext",
+    "moduleResolution": "node",
+    "target": "ES2020",
+    "types": ["node"]
   },
   "include": ["src", "types"],
   "exclude": ["node_modules", "dist"]

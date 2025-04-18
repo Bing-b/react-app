@@ -3,7 +3,8 @@ import { Avatar, Breadcrumb, Dropdown, Layout, MenuProps, theme } from 'antd';
 import { Content, Footer, Header } from 'antd/es/layout/layout';
 import Sider from 'antd/es/layout/Sider';
 import { FC } from 'react';
-import { Outlet } from 'react-router-dom';
+import { Link, Outlet } from 'react-router-dom';
+import { useBreadcrumb } from '../hooks/useBreadcrumb';
 import Aside from './aside';
 
 const MyLayout: FC = () => {
@@ -17,7 +18,7 @@ const MyLayout: FC = () => {
       label: <a href="/login">退出登录</a>,
     },
   ];
-
+  const breadcrumbs = useBreadcrumb();
   return (
     <Layout className="h-full">
       <Header className="flex items-center justify-between">
@@ -27,11 +28,17 @@ const MyLayout: FC = () => {
           <Avatar icon={<UserOutlined />} />
         </Dropdown>
       </Header>
-      <div className="h-full px-10 pb-10">
+      <div className="h-[calc(100%-133px)] overflow-hidden px-10 pb-10">
         <Breadcrumb style={{ margin: '16px 0' }}>
-          <Breadcrumb.Item>Home</Breadcrumb.Item>
-          <Breadcrumb.Item>List</Breadcrumb.Item>
-          <Breadcrumb.Item>App</Breadcrumb.Item>
+          {breadcrumbs.map((item, index) => (
+            <Breadcrumb.Item key={item.path}>
+              {index === breadcrumbs.length - 1 ? (
+                item.title
+              ) : (
+                <Link to={item.path}>{item.title}</Link>
+              )}
+            </Breadcrumb.Item>
+          ))}
         </Breadcrumb>
         <Layout
           className="h-full"

@@ -9,7 +9,7 @@ const AiChat: React.FC = () => {
       <div className="mt-[18px] flex w-full items-center justify-start">
         <img
           src={Aiuser}
-          className="mr-[8px] w-[36px] rounded-full border border-solid border-[#313131] p-1"
+          className="mr-2 w-[36px] rounded-full border border-solid border-[#313131] p-1"
           alt=""
         ></img>
         <div className="ml-2 inline-flex w-full flex-col rounded-lg bg-[#414158] px-4 py-3 text-sm text-white">

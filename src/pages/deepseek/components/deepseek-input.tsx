@@ -1,7 +1,6 @@
 import { Input, message, Popover } from 'antd';
 import { useState } from 'react';
 
-import loadingIcon from '@/assets/images/chat/loading.png';
 import IconSend from '@/assets/images/chat/send.svg';
 
 interface Props {
@@ -50,10 +49,10 @@ const DeepseekInput: React.FC<Props> = ({
   };
 
   return (
-    <div className="min-h-30 mx-auto mb-5 flex w-[70%] flex-col justify-between rounded-[30px] bg-[#404045] px-3 py-2">
+    <div className="min-h-30 mx-auto mb-5 flex w-[80%] flex-col justify-between rounded-[20px] bg-[#404045] px-3 py-2">
       <div className="mb-2.5">
         <TextArea
-          placeholder="有什么问题，我可以帮您"
+          placeholder="给 Deepseek 发送消息"
           autoSize={{ minRows: 2, maxRows: 6 }}
           style={{
             border: 0,
@@ -73,7 +72,7 @@ const DeepseekInput: React.FC<Props> = ({
             className={`flex cursor-pointer items-center rounded-full border-[1px] border-solid px-3 py-1 ${
               deepthinking
                 ? 'border-transparent bg-[#4d6bfe66]'
-                : 'border-[#E4E9ED]'
+                : 'border-[#9fa0a0]'
             }`}
             onClick={changeDeepthinking}
           >
@@ -92,20 +91,22 @@ const DeepseekInput: React.FC<Props> = ({
           <div className={`flex h-full cursor-pointer items-center`}></div>
           {loading ? (
             <Popover content="停止问答" title={null}>
-              <img
-                src={loadingIcon}
-                alt="loading"
-                className="w-[36px] cursor-pointer"
+              <div
                 onClick={stopChat}
-              ></img>
+                className="flex h-8 w-8 cursor-pointer items-center justify-center rounded-full bg-[#4166d5]"
+              >
+                <div className="h-3 w-3 rounded-sm bg-[#fff]"></div>
+              </div>
             </Popover>
           ) : (
-            <span
-              onClick={sendMessage}
-              className={`inline-flex h-9 w-9 items-center justify-center rounded-full ${value.length ? 'bg-[#4166d5]' : 'bg-[#6f6f78]'} ${!value.length ? 'cursor-not-allowed' : 'cursor-pointer'} `}
-            >
-              <img src={IconSend} width={20} color="#fff" alt=""></img>
-            </span>
+            <Popover content="请输入您的问题" title={null}>
+              <span
+                onClick={sendMessage}
+                className={`inline-flex h-8 w-8 items-center justify-center rounded-full ${value.length ? 'bg-[#4166d5]' : 'bg-[#6f6f78]'} ${!value.length ? 'cursor-not-allowed' : 'cursor-pointer'} `}
+              >
+                <img src={IconSend} width={24} alt=""></img>
+              </span>
+            </Popover>
           )}
         </div>
       </div>

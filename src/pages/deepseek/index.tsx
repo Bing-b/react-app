@@ -1,4 +1,3 @@
-import { GlobalAPI } from '@/assets/config';
 import { useSessionGroups } from '@/hooks/useSessionGroup';
 import { message } from 'antd';
 import OpenAI from 'openai';
@@ -8,7 +7,6 @@ import AiChat from './components/ai-chat';
 import AiChatDefault from './components/ai-default';
 import DeepseekInput from './components/deepseek-input';
 import Loading from './components/loading';
-import { SESSION_GROUP, SESSION_GROUP_ACTIVE_KEY } from './components/mock';
 import SliderBar from './components/slide-bar';
 import UserChat from './components/user-chat';
 
@@ -33,7 +31,7 @@ const DeepAi: React.FC = () => {
   const [messageApi, contextHolder] = message.useMessage();
 
   // 会话数据
-  const [sessions, setSessions] = useState<Session[]>([]);
+  const [sessions, setSessions] = useImmer<Session[]>([]);
 
   // 左侧会话列表
   const sessionGroups = useSessionGroups(sessions);
@@ -44,6 +42,7 @@ const DeepAi: React.FC = () => {
   // 添加询问问题
   // 接口处理 加载loading
   const [loading, setLoading] = useState(false);
+
   // 处理 流式状态
   const [answering, setAnswering] = useState(false);
 
@@ -64,8 +63,16 @@ const DeepAi: React.FC = () => {
 
   // 新建对话
   const newChat = () => {
-    if (sessions.some((i) => i.session_name === '新对话'))
-      return messageApi.warning('已是最新的对话');
+    console.log(QA_LIST);
+    if (QA_LIST.length === 0) return messageApi.warning('已是最新的对话');
+
+    setSessions((draft) => {
+      const session = draft.find((i) => i.id === sessionId);
+
+      if (session) {
+        session.session_name = QA_LIST[0].question;
+      }
+    });
 
     const newSession: Session = {
       id: Date.now().toString(),
@@ -73,17 +80,34 @@ const DeepAi: React.FC = () => {
       session_name: '新对话',
       created_time: new Date().toISOString(),
     };
-    setSessions((prev) => [newSession, ...prev]); // 新会话放在最前面
+    setSessions((prev) => {
+      prev.push(newSession);
+    }); // 新会话放在最前面
     setSessionId(newSession.session_id);
+    SET_QA_LIST([]);
   };
 
+  // 删除会话
   const deleteSession = (id: string) => {
     setSessions((prev) => prev.filter((i) => i.id !== id));
-    // console.log("deleteSession")
   };
 
   // 添加询问
   const addQuestion = (q: string) => {
+    if (sessions.length === 0) {
+      const session = {
+        id: Date.now().toString(),
+        session_id: Date.now().toString(),
+        session_name: '新对话',
+        created_time: new Date().toISOString(),
+      };
+      setSessions((draft) => {
+        draft.push(session);
+      });
+
+      setSessionId(session.id);
+    }
+
     SET_QA_LIST((prevCount) => {
       prevCount.push({
         ...ADD_CHAT_ITEM,
@@ -138,9 +162,12 @@ const DeepAi: React.FC = () => {
         const response =
           await openaiRef.current.chat.completions.create(params);
         for await (const part of response) {
+          if (currentCtrl.current.signal.aborted) {
+            break; // 手动终止循环
+          }
           setLoading(false);
           setAnswering(true);
-          console.log(part);
+          //console.log(part);
           SET_QA_LIST((prevCount) => {
             prevCount[prevCount.length - 1].answer =
               prevCount[prevCount.length - 1].answer +

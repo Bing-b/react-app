@@ -12,7 +12,7 @@ const AiChat: React.FC = () => {
           className="mr-2 w-[36px] rounded-full border border-solid border-[#313131] p-1"
           alt=""
         ></img>
-        <div className="ml-2 inline-flex w-full flex-col rounded-lg bg-[#414158] px-4 py-3 text-sm text-white">
+        <div className="ml-2 inline-flex w-full flex-col rounded-lg bg-[#414158] px-3 py-2 text-sm text-white">
           您好，有什么问题可以帮您, 你可以要我生成表格、文字、代码
         </div>
       </div>

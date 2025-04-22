@@ -1,6 +1,8 @@
 import { Input, message, Popover } from 'antd';
 import { useState } from 'react';
 
+import deepThink from '@/assets/images/chat/deepthink.svg';
+import deepThinkON from '@/assets/images/chat/deepthinking.svg';
 import IconSend from '@/assets/images/chat/send.svg';
 
 interface Props {
@@ -76,8 +78,14 @@ const DeepseekInput: React.FC<Props> = ({
             }`}
             onClick={changeDeepthinking}
           >
+            {deepthinking ? (
+              <img src={deepThinkON} width={18} alt=""></img>
+            ) : (
+              <img src={deepThink} width={18} alt=""></img>
+            )}
+
             <span
-              className={`ml-1 text-[14px] ${
+              className={`ml-1 text-xs ${
                 deepthinking ? 'text-[#a0b5f5]' : null
               }`}
             >

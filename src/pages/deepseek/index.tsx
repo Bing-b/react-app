@@ -172,7 +172,9 @@ const DeepAi: React.FC = () => {
 
     const params = {
       messages: [{ role: 'user', content: q }],
-      model: 'deepseek-ai/DeepSeek-V3',
+      model: deepthinking
+        ? 'deepseek-ai/DeepSeek-R1-Distill-Qwen-7B'
+        : 'deepseek-ai/DeepSeek-V3',
       stream: true,
       signal: currentCtrl.current.signal, // 传递 AbortController 的 signal 属性
     };
@@ -187,7 +189,7 @@ const DeepAi: React.FC = () => {
           }
           setLoading(false);
           setAnswering(true);
-          //console.log(part);
+          console.log(part);
           SET_QA_LIST((prevCount) => {
             prevCount[prevCount.length - 1].answer =
               prevCount[prevCount.length - 1].answer +

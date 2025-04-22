@@ -8,8 +8,8 @@ interface MyComponentProps {
 
 const UserChat: React.FC<MyComponentProps> = ({ message }) => {
   return (
-    <div className="flex items-start justify-end text-[16px]">
-      <div className="rounded-lg bg-[#212121] px-4 py-3 text-sm text-white">
+    <div className="flex items-start justify-end">
+      <div className="rounded-lg bg-[#212121] px-3 py-3 text-sm text-white">
         {message?.question?.trim()}
       </div>
       <img

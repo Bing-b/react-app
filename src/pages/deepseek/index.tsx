@@ -15,7 +15,7 @@ interface Session {
   session_id: string;
   session_name: string;
   created_time: string;
-
+  qalist: any[];
   // 其他字段...
 }
 
@@ -55,10 +55,27 @@ const DeepAi: React.FC = () => {
 
   const chatRef = useRef<HTMLDivElement>(null);
 
+  // openai ref
   const openaiRef = useRef<any>(null);
 
   const getSesseionHistoryList = async (id: string) => {
+    const currentSession = sessions.find((i) => i.id === sessionId);
+    if (currentSession && currentSession.session_name === '新对话') {
+      setSessions((draft) => {
+        const session = draft.find((i) => i.id === sessionId);
+        if (session) {
+          session.session_name = QA_LIST[0].question;
+          session.qalist = QA_LIST;
+        }
+      });
+    }
+
     setSessionId(id);
+    const session = sessions.find((i) => i.id === id);
+    if (session) {
+      SET_QA_LIST(session.qalist);
+      goChatBottom();
+    }
   };
 
   // 新建对话
@@ -71,6 +88,7 @@ const DeepAi: React.FC = () => {
 
       if (session) {
         session.session_name = QA_LIST[0].question;
+        session.qalist = QA_LIST;
       }
     });
 
@@ -79,6 +97,7 @@ const DeepAi: React.FC = () => {
       session_id: Date.now().toString(),
       session_name: '新对话',
       created_time: new Date().toISOString(),
+      qalist: [],
     };
     setSessions((prev) => {
       prev.push(newSession);
@@ -100,6 +119,7 @@ const DeepAi: React.FC = () => {
         session_id: Date.now().toString(),
         session_name: '新对话',
         created_time: new Date().toISOString(),
+        qalist: [],
       };
       setSessions((draft) => {
         draft.push(session);

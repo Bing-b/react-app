@@ -29,17 +29,10 @@ const MyLayout: FC = () => {
         </Dropdown>
       </Header>
       <div className="h-[calc(100%-133px)] overflow-hidden px-10 pb-10">
-        <Breadcrumb style={{ margin: '16px 0' }}>
-          {breadcrumbs.map((item, index) => (
-            <Breadcrumb.Item key={item.path}>
-              {index === breadcrumbs.length - 1 ? (
-                item.title
-              ) : (
-                <Link to={item.path}>{item.title}</Link>
-              )}
-            </Breadcrumb.Item>
-          ))}
-        </Breadcrumb>
+        <Breadcrumb
+          style={{ margin: '16px 0' }}
+          items={breadcrumbs.map((i) => ({ title: i.title, href: i.path }))}
+        ></Breadcrumb>
         <Layout
           className="h-full"
           style={{

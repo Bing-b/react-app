@@ -18,10 +18,10 @@ const AiChat: React.FC<Props> = ({ message, done }) => {
       <div className="mt-[18px] flex w-full items-start justify-start">
         <img
           src={Aiuser}
-          className="mr-[8px] w-[36px] rounded-full border-[1px] border-solid border-[#eae7e7] p-1"
+          className="mr-[8px] w-[36px] rounded-full border-[1px] border-solid border-[#313131] p-1"
           alt=""
         ></img>
-        <div className="ml-2 flex w-full flex-col font-bold text-[#000]">
+        <div className="ml-2 flex max-w-[900px] flex-col">
           <AiContext.Provider value={{ done: message?.done }}>
             <MarkdownAi done={done} markdownstr={message?.answer} />
           </AiContext.Provider>

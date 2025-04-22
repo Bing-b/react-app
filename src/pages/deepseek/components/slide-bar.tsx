@@ -42,6 +42,8 @@ const SliderBar: React.FC<SliderProps> = ({
   // 收展
   const [open, setOpen] = React.useState(true);
 
+  const [modal, contextHolder] = Modal.useModal();
+
   const sessionItems = sessionList.flatMap((i) => {
     return i.list.map((j: any) => {
       return {
@@ -63,9 +65,9 @@ const SliderBar: React.FC<SliderProps> = ({
     onClick: (menuInfo: any) => {
       menuInfo.domEvent.stopPropagation();
       if (menuInfo.key === 'delete') {
-        Modal.confirm({
-          title: '是否删除此对话',
-          content: '', // 可以添加一些额外的提示内容
+        modal.confirm({
+          title: '提升',
+          content: '是否删除此会话',
           okText: '确认',
           okType: 'primary',
           cancelText: '取消',
@@ -151,6 +153,7 @@ const SliderBar: React.FC<SliderProps> = ({
           )}
         </div>
       )}
+      {contextHolder}
     </div>
   );
 };

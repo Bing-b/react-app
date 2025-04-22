@@ -1,4 +1,5 @@
 import { GlobalAPI } from '@/assets/config';
+import { useSessionGroups } from '@/hooks/useSessionGroup';
 import { message } from 'antd';
 import OpenAI from 'openai';
 import { useEffect, useRef, useState } from 'react';
@@ -11,6 +12,15 @@ import { SESSION_GROUP, SESSION_GROUP_ACTIVE_KEY } from './components/mock';
 import SliderBar from './components/slide-bar';
 import UserChat from './components/user-chat';
 
+interface Session {
+  id: string;
+  session_id: string;
+  session_name: string;
+  created_time: string;
+
+  // 其他字段...
+}
+
 const ADD_CHAT_ITEM = {
   answer: '',
   question: '',
@@ -20,7 +30,16 @@ const ADD_CHAT_ITEM = {
 };
 
 const DeepAi: React.FC = () => {
-  const [sessionId, setSessionId] = useState<string>(SESSION_GROUP_ACTIVE_KEY);
+  const [messageApi, contextHolder] = message.useMessage();
+
+  // 会话数据
+  const [sessions, setSessions] = useState<Session[]>([]);
+
+  // 左侧会话列表
+  const sessionGroups = useSessionGroups(sessions);
+
+  // 当前会话id
+  const [sessionId, setSessionId] = useState<string>('');
 
   // 添加询问问题
   // 接口处理 加载loading
@@ -40,14 +59,26 @@ const DeepAi: React.FC = () => {
   const openaiRef = useRef<any>(null);
 
   const getSesseionHistoryList = async (id: string) => {
-    setSessionId(() => id);
+    setSessionId(id);
   };
 
+  // 新建对话
   const newChat = () => {
-    console.log('newChat');
+    if (sessions.some((i) => i.session_name === '新对话'))
+      return messageApi.warning('已是最新的对话');
+
+    const newSession: Session = {
+      id: Date.now().toString(),
+      session_id: Date.now().toString(),
+      session_name: '新对话',
+      created_time: new Date().toISOString(),
+    };
+    setSessions((prev) => [newSession, ...prev]); // 新会话放在最前面
+    setSessionId(newSession.session_id);
   };
 
-  const deleteSession = async (id: string) => {
+  const deleteSession = (id: string) => {
+    setSessions((prev) => prev.filter((i) => i.id !== id));
     // console.log("deleteSession")
   };
 
@@ -77,7 +108,7 @@ const DeepAi: React.FC = () => {
     if (!q) return;
     // 加载中不允许再次提问
     if (loading || answering) {
-      message.warning('请等待上一个问题回答完成后再提问！');
+      messageApi.warning('请等待上一个问题回答完成后再提问！');
       return false;
     }
 
@@ -97,7 +128,7 @@ const DeepAi: React.FC = () => {
 
     const params = {
       messages: [{ role: 'user', content: q }],
-      model: 'deepseek-chat',
+      model: 'deepseek-ai/DeepSeek-V3',
       stream: true,
       signal: currentCtrl.current.signal, // 传递 AbortController 的 signal 属性
     };
@@ -140,7 +171,7 @@ const DeepAi: React.FC = () => {
       // 取消加载框
       setLoading(false);
       setAnswering(false);
-      message.success('已停止生成');
+      messageApi.success('已停止生成');
     }
   };
 
@@ -158,8 +189,9 @@ const DeepAi: React.FC = () => {
 
   return (
     <div className="flex h-full w-full overflow-x-hidden">
+      {contextHolder}
       <SliderBar
-        sessionList={SESSION_GROUP}
+        sessionList={sessionGroups}
         changeSession={getSesseionHistoryList}
         newChat={newChat}
         deleteOk={deleteSession}

@@ -50,7 +50,7 @@ const MarkdownAi: React.FC<MyComponentProps> = ({ markdownstr }) => {
     <div
       ref={parentRef}
       style={{ whiteSpace: 'pre-wrap' }}
-      className="markdown-body markdown-body-light"
+      className="markdown-body markdown-body-dark rounded-lg bg-[#212121] px-4 py-3 text-sm text-white"
     >
       <ReactMarkdown
         remarkPlugins={[remarkGfm, remarkMath]}

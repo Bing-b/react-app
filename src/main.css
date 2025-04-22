@@ -42,6 +42,17 @@ body {
   /*min-height: 100vh;*/
   height: 100%;
 }
+
+::-webkit-scrollbar {
+  width: 2px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-thumb {
+  border-radius: 3px;
+  background-color: rgba(#5d5c5c, 0.2);
+}
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;

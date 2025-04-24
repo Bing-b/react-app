@@ -1,9 +1,9 @@
-import { UserOutlined } from '@ant-design/icons';
+import { DiscordOutlined, UserOutlined } from '@ant-design/icons';
 import { Avatar, Breadcrumb, Dropdown, Layout, MenuProps, theme } from 'antd';
 import { Content, Footer, Header } from 'antd/es/layout/layout';
 import Sider from 'antd/es/layout/Sider';
 import { FC } from 'react';
-import { Link, Outlet } from 'react-router-dom';
+import { Outlet } from 'react-router-dom';
 import { useBreadcrumb } from '../hooks/useBreadcrumb';
 import Aside from './aside';
 
@@ -22,32 +22,36 @@ const MyLayout: FC = () => {
   return (
     <Layout className="h-full">
       <Header className="flex items-center justify-between">
-        <div className="h-6 w-20 rounded-sm bg-slate-500" />
+        <div className="flex items-center gap-2 font-jy text-[20px]">
+          <DiscordOutlined style={{ fontSize: '30px' }} />
+          React Testing
+        </div>
 
         <Dropdown menu={{ items }} placement="bottomLeft" arrow>
           <Avatar icon={<UserOutlined />} />
         </Dropdown>
       </Header>
-      <div className="h-[calc(100%-133px)] overflow-hidden px-10 pb-10">
+      <div className="h-[calc(100%-104px)] overflow-hidden px-10">
         <Breadcrumb
           style={{ margin: '16px 0' }}
           items={breadcrumbs.map((i) => ({ title: i.title, href: i.path }))}
         ></Breadcrumb>
         <Layout
-          className="h-full"
+          className="h-[calc(100%-54px)] overflow-hidden rounded-lg"
           style={{
             background: colorBgContainer,
             borderRadius: borderRadiusLG,
           }}
         >
           <Sider
+            style={{ background: '#1e1e1e', padding: '10px' }}
             breakpoint="lg"
             collapsedWidth="0"
             onBreakpoint={(broken) => {
-              console.log(broken);
+              //console.log(broken);
             }}
             onCollapse={(collapsed, type) => {
-              console.log(collapsed, type);
+              //console.log(collapsed, type);
             }}
           >
             <Aside />
@@ -60,9 +64,11 @@ const MyLayout: FC = () => {
       <Footer
         style={{
           textAlign: 'center',
+          height: '40px',
+          padding: '10px',
         }}
       >
-        Ant Design ©{new Date().getFullYear()} Created by Ant UED
+        React box ©{new Date().getFullYear()} Created by Super Bing
       </Footer>
     </Layout>
   );

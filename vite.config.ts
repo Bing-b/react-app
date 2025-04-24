@@ -1,9 +1,19 @@
 import react from '@vitejs/plugin-react';
 import path from 'node:path';
+import AutoImport from 'unplugin-auto-import/vite';
 import { defineConfig } from 'vite';
-// https://vite.dev/config/
+
 export default defineConfig({
-  plugins: [react()],
+  plugins: [
+    react(),
+    AutoImport({
+      imports: [
+        {
+          '@iconify/react': [['Icon', 'Icon']],
+        },
+      ],
+    }),
+  ],
 
   // 配置别名
   resolve: {
@@ -12,10 +22,10 @@ export default defineConfig({
     },
   },
   css: {
-    preprocessorOptions: {
-      scss: {
-        additionalData: `@import "@/assets/styles/index.scss";`,
-      },
-    },
+    // preprocessorOptions: {
+    //   scss: {
+    //     additionalData: `@import "@/assets/styles/index.scss";`,
+    //   },
+    // },
   },
 });

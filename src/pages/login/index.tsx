@@ -1,9 +1,8 @@
+import deepseekIcon from '@/assets/images/chat/deepseek.svg';
 import { LockOutlined, UserOutlined } from '@ant-design/icons';
 import { Button, Checkbox, Form, Input, message } from 'antd';
 import { FC } from 'react';
 import { useNavigate } from 'react-router-dom';
-import reactIcon from '../../assets/images/logo_square.png';
-import './index.scss';
 
 interface LoginData {
   username: string;
@@ -55,8 +54,10 @@ const Index: FC = () => {
     <div className="relative h-full w-full bg-black">
       {contextHolder}
       <div className="absolute left-3 top-3 flex items-center gap-2">
-        <img src={reactIcon} className="w-10" />{' '}
-        <span className="font-jy text-[20px] font-bold text-white">ZEEKER</span>
+        <img src={deepseekIcon} className="w-10" />{' '}
+        <span className="font-jy text-[20px] font-bold text-white">
+          React Testing
+        </span>
       </div>
       <div className="absolute bottom-0 right-0 top-0 w-[400px] bg-[#14161a] px-[100px] py-[200px]">
         <h2 className="text-[24px]">欢迎回来 👋</h2>

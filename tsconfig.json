@@ -3,13 +3,10 @@
   "references": [
     {
       "path": "./tsconfig.app.json"
-    },
-    {
-      "path": "./tsconfig.node.json"
     }
   ],
   "compilerOptions": {
-    "baseUrl": ".",
+    "baseUrl": "./",
     "paths": {
       "@/*": ["src/*"],
       "#/*": ["types/*"]
@@ -19,6 +16,6 @@
     "target": "ES2020",
     "types": ["node"]
   },
-  "include": ["src", "types"],
+  "include": ["src", "types", "auto-imports.d.ts"],
   "exclude": ["node_modules", "dist"]
 }

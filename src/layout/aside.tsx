@@ -11,8 +11,10 @@ const Aside = () => {
   const [routes] = useState<any[]>(mainRoutes);
 
   // 打开与选中
-  const defaultOpenKeys = (localStorage.getItem('openKeys') || '')?.split(',');
-  const defaultSelectKeys = localStorage.getItem('selectKeys') || '';
+  const defaultOpenKeys = (sessionStorage.getItem('openKeys') || '/')?.split(
+    ',',
+  );
+  const defaultSelectKeys = sessionStorage.getItem('selectKeys') || '/';
   const [selectKeys, setSelectKeys] = useState<string[]>([defaultSelectKeys]);
   const [openKeys, setOpenKeys] = useState<string[]>(defaultOpenKeys);
 
@@ -28,8 +30,8 @@ const Aside = () => {
     const openKeys = e.keyPath.join(',');
     setSelectKeys(selectKeys);
     setOpenKeys(openKeys);
-    localStorage.setItem('selectKeys', selectKeys);
-    localStorage.setItem('openKeys', openKeys);
+    sessionStorage.setItem('selectKeys', selectKeys);
+    sessionStorage.setItem('openKeys', openKeys);
   };
 
   return (
@@ -37,6 +39,7 @@ const Aside = () => {
       <Menu
         mode="inline"
         theme="dark"
+        style={{ background: '#1e1e1e' }}
         defaultOpenKeys={openKeys}
         defaultSelectedKeys={selectKeys}
         items={

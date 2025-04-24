@@ -1,6 +1,3 @@
-import IconCloseNewchat from '@/assets/images/chat/history-close-newchat.svg';
-import IconOpenNewchat from '@/assets/images/chat/history-new-newchat.svg';
-import IconMenu from '@/assets/images/chat/menu.svg';
 import { Conversations, type ConversationsProps } from '@ant-design/x';
 import { Divider, Empty, GetProp, Modal, Popover, Space } from 'antd';
 import React from 'react';
@@ -15,7 +12,7 @@ interface SliderProps {
 
 const style = {
   width: '100%',
-  background: '#141414',
+  background: '#212327',
   borderRadius: '0px',
   paddingBottom: '8px',
   paddingTop: '8px',
@@ -88,7 +85,7 @@ const SliderBar: React.FC<SliderProps> = ({
 
   return (
     <div
-      className={`transition-width h-full duration-75 ease-in-out ${open ? 'w-[280px' : 'w-[60px]'} ${open ? 'overflow-auto' : 'overflow-hidden'}`}
+      className={`transition-width h-full bg-[#212327] duration-75 ease-in-out ${open ? 'w-[280px' : 'w-[60px]'} ${open ? 'overflow-auto' : 'overflow-hidden'}`}
     >
       {/* 收起状态 */}
       {!open && (
@@ -97,18 +94,22 @@ const SliderBar: React.FC<SliderProps> = ({
             open && 'hidden'
           }`}
         >
-          <img
-            src={IconMenu}
-            className="mt-5 h-[24px] cursor-pointer"
+          <Icon
             onClick={() => setOpen(true)}
-          ></img>
+            className="mt-5 cursor-pointer"
+            icon="proicons:panel-left-expand"
+            width="28"
+            height="28"
+            color="#767676"
+          />
           <Divider />
           <Popover content="新对话" title={null} placement="right">
-            <img
-              src={IconCloseNewchat}
-              className="mt-4 h-[56px] cursor-pointer"
+            <div
               onClick={newChat}
-            ></img>
+              className="flex h-10 w-10 cursor-pointer items-center justify-center rounded-lg bg-[#4d6bfe]"
+            >
+              <Icon icon="tabler:message-plus" width="20" height="20" />
+            </div>
           </Popover>
         </div>
       )}
@@ -120,20 +121,19 @@ const SliderBar: React.FC<SliderProps> = ({
         >
           {/* 顶部新会话 */}
           <div className="mb-4 flex w-full items-center justify-between px-4 pt-5">
-            <img
-              src={IconMenu}
-              className="h-[24px] cursor-pointer"
+            <Icon
               onClick={close}
-            ></img>
-            <div className="h-[70%] w-[1px] bg-[#313131]"></div>
+              className="cursor-pointer"
+              icon="proicons:panel-right-expand"
+              width="28"
+              height="28"
+              color="#767676"
+            />
             <div
               onClick={newChat}
-              className="flex cursor-pointer items-center gap-1 rounded-lg bg-[#4d6bfe] px-3 py-2 hover:!bg-[#4166d5]"
+              className="flex cursor-pointer items-center gap-1 rounded-lg bg-[#4d6bfe] px-3 py-2 text-sm hover:!bg-[#4166d5]"
             >
-              <img
-                src={IconOpenNewchat}
-                className="h-[20px] cursor-pointer"
-              ></img>
+              <Icon icon="tabler:message-plus" width="20" height="20" />
               开启新对话
             </div>
           </div>
@@ -149,7 +149,11 @@ const SliderBar: React.FC<SliderProps> = ({
               menu={menuConfig}
             />
           ) : (
-            <Empty className="mt-32" description="暂无会话" />
+            <Empty
+              image="https://gw.alipayobjects.com/zos/antfincdn/ZHrcdLPrvN/empty.svg"
+              className="mt-32"
+              description="暂无会话"
+            />
           )}
         </div>
       )}

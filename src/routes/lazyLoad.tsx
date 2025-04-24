@@ -14,4 +14,3 @@ function lazyLoad(Comp: LazyExoticComponent<any>) {
 }
 
 export default lazyLoad;
-

@@ -1,21 +1,16 @@
 import React from 'react';
 
-import MeUser from '@/assets/images/chat/me-user.svg';
-
 interface MyComponentProps {
   message: any;
 }
 
 const UserChat: React.FC<MyComponentProps> = ({ message }) => {
   return (
-    <div className="flex items-start justify-end">
-      <div className="rounded-lg bg-[#212121] px-3 py-3 text-sm text-white">
+    <div className="flex items-start justify-end gap-4">
+      <div className="rounded-lg bg-[#212121] px-3 py-2 text-sm text-white">
         {message?.question?.trim()}
       </div>
-      <img
-        src={MeUser}
-        className="ml-[8px] w-[36px] rounded-full border border-solid border-[#313131] p-1"
-      ></img>
+      <Icon icon="quill:user-neutral" width="24" height="24" color="#4d6bfe" />
     </div>
   );
 };

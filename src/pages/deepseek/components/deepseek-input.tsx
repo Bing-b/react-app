@@ -1,9 +1,7 @@
-import { Input, message, Popover } from 'antd';
-import { useState } from 'react';
-
 import deepThink from '@/assets/images/chat/deepthink.svg';
 import deepThinkON from '@/assets/images/chat/deepthinking.svg';
-import IconSend from '@/assets/images/chat/send.svg';
+import { Input, message, Popover } from 'antd';
+import { useState } from 'react';
 
 interface Props {
   send: (s: string) => void; // 发送消息
@@ -25,11 +23,13 @@ const DeepseekInput: React.FC<Props> = ({
   // 回车 发送问题
   const [value, setValue] = useState('');
 
-  const handleChange = (e) => {
+  const [active, setActive] = useState(false);
+
+  const handleChange = (e: any) => {
     setValue(e.target.value);
   };
 
-  const handleKeyDown = (e) => {
+  const handleKeyDown = (e: any) => {
     if (loading) {
       message.warning('正在回答请稍后提问');
       return;
@@ -37,6 +37,7 @@ const DeepseekInput: React.FC<Props> = ({
     if (e.key === 'Enter' && !e.shiftKey && !e.ctrlKey) {
       e.preventDefault(); // 阻止默认的回车行为
       send(value);
+      setActive(true);
       setValue('');
     }
   };
@@ -47,11 +48,16 @@ const DeepseekInput: React.FC<Props> = ({
       return;
     }
     send(value);
+    setActive(true);
     setValue('');
   };
 
   return (
-    <div className="min-h-30 mx-auto mb-5 flex w-[80%] flex-col justify-between rounded-[20px] bg-[#404045] px-3 py-2">
+    <div
+      className={`min-h-30 mx-auto mb-5 flex flex-col justify-between rounded-[20px] bg-[#404045] px-3 py-2 duration-300 ease-in-out ${
+        active ? 'w-[800px]' : 'w-[672px]'
+      }`}
+    >
       <div className="mb-2.5">
         <TextArea
           placeholder="给 Deepseek 发送消息"
@@ -112,7 +118,11 @@ const DeepseekInput: React.FC<Props> = ({
                 onClick={sendMessage}
                 className={`inline-flex h-8 w-8 items-center justify-center rounded-full ${value.length ? 'bg-[#4166d5]' : 'bg-[#6f6f78]'} ${!value.length ? 'cursor-not-allowed' : 'cursor-pointer'} `}
               >
-                <img src={IconSend} width={24} alt=""></img>
+                <Icon
+                  icon="material-symbols:arrow-upward-alt-rounded"
+                  width="24"
+                  height="24"
+                />
               </span>
             </Popover>
           )}

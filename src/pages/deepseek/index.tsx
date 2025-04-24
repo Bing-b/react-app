@@ -1,10 +1,10 @@
+import deepseekIcon from '@/assets/images/chat/deepseek.svg';
 import { useSessionGroups } from '@/hooks/useSessionGroup';
 import { message } from 'antd';
 import OpenAI from 'openai';
 import { useEffect, useRef, useState } from 'react';
 import { useImmer } from 'use-immer';
 import AiChat from './components/ai-chat';
-import AiChatDefault from './components/ai-default';
 import DeepseekInput from './components/deepseek-input';
 import Loading from './components/loading';
 import SliderBar from './components/slide-bar';
@@ -39,13 +39,13 @@ const DeepAi: React.FC = () => {
   // 当前会话id
   const [sessionId, setSessionId] = useState<string>('');
 
-  // 添加询问问题
-  // 接口处理 加载loading
+  // 回答加载loading
   const [loading, setLoading] = useState(false);
 
   // 处理 流式状态
   const [answering, setAnswering] = useState(false);
 
+  // 启用深度思考
   const [deepthinking, setDeepthinking] = useState(false);
 
   // 问答列表
@@ -58,6 +58,7 @@ const DeepAi: React.FC = () => {
   // openai ref
   const openaiRef = useRef<any>(null);
 
+  // 切换会话
   const getSesseionHistoryList = async (id: string) => {
     const currentSession = sessions.find((i) => i.id === sessionId);
     if (currentSession && currentSession.session_name === '新对话') {
@@ -237,7 +238,7 @@ const DeepAi: React.FC = () => {
   }, []);
 
   return (
-    <div className="flex h-full w-full overflow-x-hidden">
+    <div className="flex h-full w-full overflow-x-hidden bg-[#292a2d]">
       {contextHolder}
       <SliderBar
         sessionList={sessionGroups}
@@ -246,12 +247,25 @@ const DeepAi: React.FC = () => {
         deleteOk={deleteSession}
         activeKey={sessionId}
       ></SliderBar>
-      <div className="flex h-full flex-1 flex-col justify-between p-4">
+      <div className="flex h-full flex-1 flex-col justify-center p-4">
         <div
-          className="min-h-0 min-w-0 flex-1 flex-col gap-4 overflow-auto pb-24"
+          className={`min-h-0 min-w-0 flex-col gap-4 overflow-auto ${loading ? 'pb-24' : 'pb-5'} ${QA_LIST.length ? 'flex-1' : ''}`}
           ref={chatRef}
         >
-          <AiChatDefault />
+          {!QA_LIST.length && (
+            <div className="m-auto flex flex-col items-center">
+              <div className="flex items-center gap-3">
+                <img src={deepseekIcon} className="w-[56px]" alt="" />
+                <span className="text-[24px]">
+                  我是 DeepSeek, 很高兴见到你！
+                </span>
+              </div>
+              <p>
+                我可以帮你写代码、读文件、写作各自创意内容，请把你的任务交给我吧~
+              </p>
+            </div>
+          )}
+          {/* <AiChatDefault /> */}
           {QA_LIST.map((i, idx) => {
             return (
               <div key={idx}>

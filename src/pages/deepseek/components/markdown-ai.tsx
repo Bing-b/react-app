@@ -5,7 +5,8 @@ import remarkGfm from 'remark-gfm';
 import remarkMath from 'remark-math';
 import PreWithCopy from './copycode.tsx';
 
-import 'highlight.js/styles/github.css';
+// 暗色主题高亮
+import 'highlight.js/styles/monokai-sublime.css';
 import rehypeHighlight from 'rehype-highlight'; // 代码高亮
 
 interface MyComponentProps {

@@ -36,6 +36,10 @@ body {
   height: 100%;
 }
 
+#root {
+  height: 100%;
+}
+
 ::-webkit-scrollbar {
   width: 2px;
   height: 6px;
@@ -50,4 +54,20 @@ body {
   .text-stroke {
     -webkit-text-stroke: 0.05rem #dce6ee;
   }
+}
+
+.markdown-body table {
+  color: #333;
+}
+
+.markdown-body pre {
+  background-color: #373a3e;
+}
+
+.markdown-body p {
+  max-width: 100%;
+}
+
+.ant-menu-dark .ant-menu-item-selected {
+  background-color: #373a3e;
 }

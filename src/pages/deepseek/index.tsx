@@ -51,6 +51,7 @@ const DeepAi: React.FC = () => {
   // 问答列表
   const [QA_LIST, SET_QA_LIST] = useImmer<any[]>([]);
 
+  // 当前会话实例
   const currentCtrl = useRef<any>(null);
 
   const chatRef = useRef<HTMLDivElement>(null);
@@ -174,16 +175,23 @@ const DeepAi: React.FC = () => {
     const params = {
       messages: [{ role: 'user', content: q }],
       model: deepthinking
-        ? 'deepseek-ai/DeepSeek-R1-Distill-Qwen-7B'
+        ? 'deepseek-ai/DeepSeek-R1-Distill-Qwen-1.5B'
         : 'deepseek-ai/DeepSeek-V3',
       stream: true,
-      signal: currentCtrl.current.signal, // 传递 AbortController 的 signal 属性
+      max_tokens: 4096,
+      extra_body: {
+        // 声明需要返回推理步骤
+        return_reasoning: true,
+        reasoning_mode: 'long_chain', // 或 "distilled"
+      },
+      //signal: currentCtrl.current.signal, // 传递 AbortController 的 signal 属性
     };
 
     if (params.messages.length > 0) {
       try {
         const response =
           await openaiRef.current.chat.completions.create(params);
+
         for await (const part of response) {
           if (currentCtrl.current.signal.aborted) {
             break; // 手动终止循环

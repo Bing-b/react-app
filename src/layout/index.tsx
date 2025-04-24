@@ -1,11 +1,30 @@
-import { DiscordOutlined, UserOutlined } from '@ant-design/icons';
-import { Avatar, Breadcrumb, Dropdown, Layout, MenuProps, theme } from 'antd';
+import { DiscordOutlined, DownOutlined, UserOutlined } from '@ant-design/icons';
+import {
+  Avatar,
+  Breadcrumb,
+  Button,
+  Divider,
+  Dropdown,
+  Layout,
+  MenuProps,
+  Space,
+  theme,
+} from 'antd';
 import { Content, Footer, Header } from 'antd/es/layout/layout';
 import Sider from 'antd/es/layout/Sider';
-import { FC } from 'react';
+import React, { FC } from 'react';
 import { Outlet } from 'react-router-dom';
 import { useBreadcrumb } from '../hooks/useBreadcrumb';
 import Aside from './aside';
+
+const contentStyle: React.CSSProperties = {
+  backgroundColor: '#313131',
+  borderRadius: '4px',
+};
+
+const menuStyle: React.CSSProperties = {
+  boxShadow: 'none',
+};
 
 const MyLayout: FC = () => {
   const {
@@ -16,13 +35,20 @@ const MyLayout: FC = () => {
     {
       key: '1',
       label: <a href="/login">退出登录</a>,
+      icon: (
+        <Icon
+          icon="material-symbols-light:login-outline-rounded"
+          width="20"
+          height="20"
+        />
+      ),
     },
   ];
   const breadcrumbs = useBreadcrumb();
   return (
     <Layout className="h-full">
       <Header className="flex items-center justify-between">
-        <div className="flex items-center gap-2 font-jy text-[20px]">
+        <div className="font-jy flex items-center gap-2 text-[20px]">
           <DiscordOutlined style={{ fontSize: '30px' }} />
           React Testing
         </div>

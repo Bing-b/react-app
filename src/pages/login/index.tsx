@@ -53,15 +53,15 @@ const Index: FC = () => {
   return (
     <div className="relative h-full w-full bg-black">
       {contextHolder}
-      <div className="absolute left-3 top-3 flex items-center gap-2">
+      <div className="absolute top-3 left-3 flex items-center gap-2">
         <img src={deepseekIcon} className="w-10" />{' '}
         <span className="font-jy text-[20px] font-bold text-white">
           React Testing
         </span>
       </div>
-      <div className="absolute bottom-0 right-0 top-0 w-[400px] bg-[#14161a] px-[100px] py-[200px]">
+      <div className="absolute top-0 right-0 bottom-0 w-[600px] bg-[#14161a] px-[100px] py-[200px]">
         <h2 className="text-[24px]">欢迎回来 👋</h2>
-        <p className="text-sm text-white/60">请输入您的账户信息！</p>
+        <p className="my-5 text-sm text-white/60">请输入您的账户信息！</p>
 
         <Form
           className="mt-8"

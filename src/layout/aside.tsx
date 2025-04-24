@@ -15,6 +15,7 @@ const Aside = () => {
     ',',
   );
   const defaultSelectKeys = sessionStorage.getItem('selectKeys') || '/';
+
   const [selectKeys, setSelectKeys] = useState<string[]>([defaultSelectKeys]);
   const [openKeys, setOpenKeys] = useState<string[]>(defaultOpenKeys);
 

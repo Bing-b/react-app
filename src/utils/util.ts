@@ -13,7 +13,7 @@ export interface RouteObject {
 }
 
 /**
- * 获取路径对应的路由配置，没有则返回 null
+ * 获取路径对应的路由配置，没有则返回null
  * @param path 路由完整路径
  * @param routes 路由数组
  * @returns 路由配置项

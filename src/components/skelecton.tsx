@@ -1,7 +1,7 @@
 import { Skeleton } from 'antd';
 import { FunctionComponent } from 'react';
 
-// 骨架屏
+// 骨架屏1
 const SkeletonFC: FunctionComponent = () => {
   return (
     <>

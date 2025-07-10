@@ -16,9 +16,9 @@ interface Session {
   session_name: string;
   created_time: string;
   qalist: any[];
-  // 其他字段...
 }
 
+// 新增聊天
 const ADD_CHAT_ITEM = {
   answer: '',
   question: '',
@@ -179,12 +179,8 @@ const DeepAi: React.FC = () => {
         : 'deepseek-ai/DeepSeek-V3',
       stream: true,
       max_tokens: 4096,
-      extra_body: {
-        // 声明需要返回推理步骤
-        return_reasoning: true,
-        reasoning_mode: 'long_chain', // 或 "distilled"
-      },
-      //signal: currentCtrl.current.signal, // 传递 AbortController 的 signal 属性
+      temperature: 0.7,
+      signal: currentCtrl.current.signal, // 传递 AbortController 的 signal 属性
     };
 
     if (params.messages.length > 0) {
